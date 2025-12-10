@@ -1,1 +1,13 @@
-# zadatcilv5
+# Zadatci LV5
+
+## Zadatak 1
+### [<Otvori>](<https://github.com/filipmoco0/zadatcilv5/blob/main/zadatak1.cs>)
+
+## Zadatak 2
+### [<Otvori>](<https://github.com/filipmoco0/zadatcilv5/blob/main/zadatak2.cs>)
+
+## Zadatak 3
+### [<Otvori>](<https://github.com/filipmoco0/zadatcilv5/blob/main/zadatak3.cs>)
+
+## Zadatak 3 prve 3 točke
+### [<Otvori>](<https://github.com/filipmoco0/zadatcilv5/blob/main/3tockezadatak3.cs>)
