@@ -8,6 +8,3 @@
 
 ## Zadatak 3
 ### [Otvori](https://github.com/filipmoco0/zadatcilv5/blob/main/zadatak3.cs)
-
-## Zadatak 3 prve 3 točke
-### [Otvori](https://github.com/filipmoco0/zadatcilv5/blob/main/3tockezadatak3.cs)
