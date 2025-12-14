@@ -1,138 +1,50 @@
 using System;
+using System;
+using System.IO;
 using System.Collections.Generic;
-using System.Linq;
-
-struct Racunalo
-{
-    public string naziv;
-    public double takt;          // u GHz
-    public string opis;
-    public Kategorija kategorija;
-
-    public enum Kategorija
-    {
-        Gaming = 1,
-        Poslovno = 2,
-        RadnaStanica = 3
-    }
-
-    public void Ispis()
-    {
-        Console.WriteLine($"Naziv: {naziv}, Takt: {takt} GHz, Kategorija: {kategorija}, Opis: {opis}");
-    }
-}
 
 class Program
 {
     static void Main()
     {
-        // 1) Kreiranje 5 računala i dodavanje u listu
-        List<Racunalo> lracunala = new List<Racunalo>()
+        string inputPath = "Zad2-1.txt";
+        string outputPath = "Zad2-2.txt";
+
+        List<int> brojevi = new List<int>();
+        foreach (string line in File.ReadAllLines(inputPath))
         {
-            new Racunalo{ naziv="Acer Nitro", takt=3.8, opis="Gaming laptop", kategorija=Racunalo.Kategorija.Gaming },
-            new Racunalo{ naziv="Dell XPS", takt=4.1, opis="Premium poslovni laptop", kategorija=Racunalo.Kategorija.Poslovno },
-            new Racunalo{ naziv="HP ZBook", takt=3.5, opis="Workstation model", kategorija=Racunalo.Kategorija.RadnaStanica },
-            new Racunalo{ naziv="Lenovo ThinkPad", takt=4.1, opis="Poslovni laptop", kategorija=Racunalo.Kategorija.Poslovno },
-            new Racunalo{ naziv="MSI Stealth", takt=3.9, opis="Gaming ultrabook", kategorija=Racunalo.Kategorija.Gaming }
-        };
-
-        // Ispis for
-        Console.WriteLine("FOR petlja:");
-        for (int i = 0; i < lracunala.Count; i++)
-            lracunala[i].Ispis();
-
-        // Ispis foreach
-        Console.WriteLine("\nFOREACH petlja:");
-        foreach (var r in lracunala)
-            r.Ispis();
-
-
-        // 2) Ispis računala s najvećim taktom
-        Console.WriteLine("\nRačunala s najvećim taktom:");
-        IspisiNajveciTakt(lracunala);
-
-
-        // 3) Dodavanje računala
-        DodajRacunalo(lracunala, new Racunalo
-        {
-            naziv = "Asus ROG",
-            takt = 4.1,
-            opis = "Gaming high-end laptop",
-            kategorija = Racunalo.Kategorija.Gaming
-        });
-
-
-        // 4) Ispis po kategoriji preko switch-a
-        Console.WriteLine("\nOdaberi kategoriju (1=Gaming, 2=Poslovno, 3=Radna stanica):");
-        int kat = int.Parse(Console.ReadLine());
-        IspisiPoKategoriji(lracunala, kat);
-
-
-        // 5) Pretraga po opisu
-        Console.WriteLine("\nUnesi pojam za pretragu opisa:");
-        string pojam = Console.ReadLine();
-        PretraziOpis(lracunala, pojam);
-    }
-
-
-    // ============================================
-    // 2) Najveći takt
-    // ============================================
-    static void IspisiNajveciTakt(List<Racunalo> lista)
-    {
-        double max = lista.Max(r => r.takt);
-
-        foreach (var r in lista)
-            if (r.takt == max)
-                r.Ispis();
-    }
-
-    // ============================================
-    // 3) Dodavanje novog računala
-    // Kriterij: validni podaci (npr. naziv != null, takt > 0)
-    // ============================================
-    static void DodajRacunalo(List<Racunalo> lista, Racunalo r)
-    {
-        if (r.takt <= 0 || string.IsNullOrWhiteSpace(r.naziv))
-        {
-            Console.WriteLine("Greška: neispravni podaci.");
-            return;
+            brojevi.Add(int.Parse(line));
         }
 
-        lista.Add(r);
-    }
+        List<int> nesortirana = new List<int>(brojevi);
 
-    // ============================================
-    // 4) Ispis po kategoriji — SWITCH
-    // ============================================
-    static void IspisiPoKategoriji(List<Racunalo> lista, int tip)
-    {
-        Racunalo.Kategorija kat;
+        brojevi.Sort((a, b) => b.CompareTo(a));
 
-        switch (tip)
+        Console.Write("Unesite broj za pretragu: ");
+        int n = int.Parse(Console.ReadLine());
+
+        bool postoji = BinarnaPretraga(brojevi, n);
+
+        using (StreamWriter sw = new StreamWriter(outputPath))
         {
-            case 1: kat = Racunalo.Kategorija.Gaming; break;
-            case 2: kat = Racunalo.Kategorija.Poslovno; break;
-            case 3: kat = Racunalo.Kategorija.RadnaStanica; break;
-            default:
-                Console.WriteLine("Nepostojeća kategorija.");
-                return;
+            sw.WriteLine(string.Join(",", nesortirana));
+            sw.WriteLine(string.Join(",", brojevi));
+            sw.WriteLine($"{n},{(postoji ? 1 : 0)}");
         }
 
-        foreach (var r in lista)
-            if (r.kategorija == kat)
-                r.Ispis();
+        Console.WriteLine("Rezultat zapisan u Zad2-2.txt");
     }
 
-    // ============================================
-    // 5) Pretraga opisa - case insensitive + dio pojma
-    // ============================================
-    static void PretraziOpis(List<Racunalo> lista, string pojam)
+    static bool BinarnaPretraga(List<int> lista, int n)
     {
-        pojam = pojam.ToLower();
-
-        foreach (var r in lista)
-            if (r.opis.ToLower().Contains(pojam))
-                r.Ispis();
+        int left = 0, right = lista.Count - 1;
+        while (left <= right)
+        {
+            int mid = (left + right) / 2;
+            if (lista[mid] == n) return true;
+            else if (lista[mid] > n) left = mid + 1;
+            else right = mid - 1;
+        }
+        return false;
     }
 }
