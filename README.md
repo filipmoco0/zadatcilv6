@@ -7,4 +7,4 @@
 ### [Otvori](https://github.com/filipmoco0/zadatcilv5/blob/main/zadatak2.cs)
 
 ## Zadatak 3
-### [Otvori](https://github.com/filipmoco0/zadatcilv5/blob/main/zadatak3.cs)
+### [Otvori](https://github.com/filipmoco0/zadatcilv6/tree/main/Zadatak3)
