@@ -6,43 +6,49 @@ class Program
 {
     static void Main()
     {
-        string inputPath = "Zad2-1.txt";
-        string outputPath = "Zad2-2.txt";
-
+        // Čitanje brojeva iz datoteke u listu
         List<int> brojevi = new List<int>();
-        foreach (string line in File.ReadAllLines(inputPath))
-        {
-            brojevi.Add(int.Parse(line));
-        }
+        foreach (string red in File.ReadAllLines("Zad2-1.txt"))
+            brojevi.Add(int.Parse(red));
 
+        // Kopija nesortirane liste
         List<int> nesortirana = new List<int>(brojevi);
 
-        brojevi.Sort((a, b) => b.CompareTo(a));
+        // Sortiranje silazno
+        SortirajSilazno(brojevi);
 
-        Console.Write("Unesite broj za pretragu: ");
-        int n = int.Parse(Console.ReadLine());
+        int trazeniBroj = 10; // primjer tražene vrijednosti
+        bool postoji = BinarnaPretraga(brojevi, trazeniBroj);
 
-        bool postoji = BinarnaPretraga(brojevi, n);
-
-        using (StreamWriter sw = new StreamWriter(outputPath))
+        // Upis u datoteku
+        using (StreamWriter sw = new StreamWriter("Zad2-2.txt"))
         {
             sw.WriteLine(string.Join(",", nesortirana));
             sw.WriteLine(string.Join(",", brojevi));
-            sw.WriteLine($"{n},{(postoji ? 1 : 0)}");
+            sw.WriteLine(trazeniBroj);
+            sw.WriteLine(postoji ? 1 : 0);
         }
+    }
 
-        Console.WriteLine("Rezultat zapisan u Zad2-2.txt");
+    static void SortirajSilazno(List<int> lista)
+    {
+        lista.Sort();
+        lista.Reverse();
     }
 
     static bool BinarnaPretraga(List<int> lista, int n)
     {
-        int left = 0, right = lista.Count - 1;
-        while (left <= right)
+        int lijevo = 0, desno = lista.Count - 1;
+
+        while (lijevo <= desno)
         {
-            int mid = (left + right) / 2;
-            if (lista[mid] == n) return true;
-            else if (lista[mid] > n) left = mid + 1;
-            else right = mid - 1;
+            int sredina = (lijevo + desno) / 2;
+
+            if (lista[sredina] == n) return true;
+            if (lista[sredina] < n)
+                desno = sredina - 1;   // jer je silazno sortirano
+            else
+                lijevo = sredina + 1;
         }
         return false;
     }
