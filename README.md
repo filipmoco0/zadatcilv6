@@ -1,10 +1,11 @@
-# Zadatci LV6
+# Zadatci LV1
 
-## Zadatak 1
-### [Otvori](https://github.com/filipmoco0/zadatcilv6/blob/main/zadatak1.cs)
+## Zadatak 4
+### [Otvori](https://github.com/filipmoco0/oop/blob/main/zadatak4/program.cs)
 
-## Zadatak 2
-### [Otvori](https://github.com/filipmoco0/zadatcilv6/blob/main/zadatak2.cs)
+## Zadatak 5
+### [Otvori program.cs](https://github.com/filipmoco0/oop/blob/main/zadatak%205/program.cs)
+### [Otvori student.cs](https://github.com/filipmoco0/oop/blob/main/zadatak%205/student.cs)
 
-## Zadatak 3
-### [Otvori](https://github.com/filipmoco0/zadatcilv6/tree/main/zadatak3.cs)
+## Zadatak 6
+### [Otvori](https://github.com/filipmoco0/oop/blob/main/zadatak%206/program.cs)
