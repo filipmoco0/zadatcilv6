@@ -4,8 +4,7 @@
 ### [Otvori](https://github.com/filipmoco0/oop/blob/main/zadatak1/program.cs)
 
 ## Zadatak 2
-### [Otvori program.cs](https://github.com/filipmoco0/oop/blob/main/zadatak%205/program.cs)
-### [Otvori student.cs](https://github.com/filipmoco0/oop/blob/main/zadatak%205/student.cs)
+### [Otvori](https://github.com/filipmoco0/oop/blob/main/zadatak2/program.cs)
 
 ## Zadatak 3
-### [Otvori](https://github.com/filipmoco0/oop/blob/main/zadatak%206/program.cs)
+### [Otvori](https://github.com/filipmoco0/oop/blob/main/zadatak3/program.cs)
