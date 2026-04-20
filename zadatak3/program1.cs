@@ -1,40 +1,221 @@
 using System;
 using System.Collections.Generic;
 
-public class Alkohol
+public class GeometrijskiLik
 {
-    private string _naziv;
-    private double _cijena;
-    private double _postotakAlkohola;
-    private string _tipAlkohola;
-    private int _godinaProizvodnje;
-    private List<string> _sastojci;
-    
-    public string Naziv
+    public string boja;
+
+    public GeometrijskiLik()
     {
-        get { return _naziv; }
-        set { _naziv = value; }
+        boja = "Zelena";
     }
 
-    public double Cijena
+    public virtual void Tip()
     {
-        get {return _cijena; }
-        set { _cijena = value; }
+        Console.WriteLine("Geometrijski lik.");
     }
-    public double PostotakAlkohola
+
+    public virtual float Povrsina()
     {
-        get { return _postotakAlkohola; }
-        private set { _postotakAlkohola = value; }
+        Console.WriteLine("Povrsina geometrijskog lika.");
+        return 0;
     }
-    public string TipAlkohola
+
+    public virtual float Opseg()
     {
-        get { return _tipAlkohola; }
-        private set { _tipAlkohola = value; }
+        Console.WriteLine("Opseg geometrijskog lika.");
+        return 0;
     }
-    
-    public int GodinaProizvodnje
+}
+
+// --------------------
+
+class Krug : GeometrijskiLik
+{
+    private float _r;
+
+    public Krug()
     {
-        get { return _godinaProizvodnje; }
+        _r = 1;
+    }
+
+    public Krug(float polumjer)
+    {
+        _r = polumjer;
+    }
+
+    public override void Tip()
+    {
+        Console.WriteLine("Krug polumjera " + _r);
+    }
+
+    public override float Povrsina()
+    {
+        return _r * _r * (float)(Math.PI);
+    }
+
+    public override float Opseg()
+    {
+        return 2 * _r * (float)Math.PI;
+    }
+}
+
+// --------------------
+
+class Pravokutnik : GeometrijskiLik
+{
+    protected float _a, _b;
+
+    public Pravokutnik()
+    {
+        _a = 0;
+        _b = 0;
+    }
+
+    public Pravokutnik(float a, float b)
+    {
+        _a = a;
+        _b = b;
+    }
+
+    public override void Tip()
+    {
+        Console.WriteLine("Pravokutnik sa stranicama duljine " + _a + " i " + _b);
+    }
+
+    public override float Povrsina()
+    {
+        return _a * _b;
+    }
+
+    public override float Opseg()
+    {
+        return 2 * _a + 2 * _b;
+    }
+}
+
+// --------------------
+
+class Kvadrat : Pravokutnik
+{
+    public Kvadrat()
+    {
+        _a = 1;
+    }
+
+    public Kvadrat(float a)
+    {
+        _a = a;
+    }
+
+    public override void Tip()
+    {
+        Console.WriteLine("Kvadrat sa stranicom duljine " + _a);
+    }
+
+    public override float Povrsina()
+    {
+        return _a * _a;
+    }
+
+    public override float Opseg()
+    {
+        return 4 * _a;
+    }
+}
+
+// --------------------
+
+public class Trokut : GeometrijskiLik
+{
+    protected float _a, _b, _c;
+
+    public Trokut()
+    {
+        _a = _b = _c = 0;
+    }
+
+    public Trokut(float a, float b, float c)
+    {
+        _a = a;
+        _b = b;
+        _c = c;
+    }
+
+    protected bool isValid()
+    {
+        if (_a <= 0 || _b <= 0 || _c <= 0)
+            return false;
+        else if ((_a + _b) <= _c || (_a + _c) <= _b || (_b + _c) <= _a)
+            return false;
+        else return true;
+    }
+
+    public override void Tip()
+    {
+        Console.WriteLine("Trokut sa stranicama duljine " + _a + ", " + _b + " i " + _c);
+    }
+
+    public override float Povrsina()
+    {
+        if (isValid())
+        {
+            float s = (_a + _b + _c) / 2;
+            float P = (float)Math.Sqrt(s * (s - _a) * (s - _b) * (s - _c));
+            return P;
+        }
+        else
+        {
+            return -1;
+        }
+    }
+
+    public override float Opseg()
+    {
+        if (isValid())
+        {
+            return _a + _b + _c;
+        }
+        else
+        {
+            return -1;
+        }
+    }
+}
+
+// --------------------
+
+class Program
+{
+    static void Main(string[] args)
+    {
+        GeometrijskiLik t1 = new Trokut(2, 3, 30);
+        GeometrijskiLik k1 = new Krug(3);
+        GeometrijskiLik p1 = new Pravokutnik(2, 4);
+        GeometrijskiLik kv1 = new Kvadrat(5);
+
+        List<GeometrijskiLik> lista = new List<GeometrijskiLik>() { t1, k1, p1, kv1 };
+
+        foreach (GeometrijskiLik g in lista)
+        {
+            g.Tip();
+
+            if (g.Opseg() <= 0 || g.Povrsina() <= 0)
+            {
+                Console.WriteLine("Geometrijski lik nije dobro definiran!");
+                Console.WriteLine("Boja: " + g.boja);
+            }
+            else
+            {
+                Console.WriteLine("Opseg: " + g.Opseg());
+                Console.WriteLine("Povrsina: " + g.Povrsina());
+                Console.WriteLine("Boja: " + g.boja);
+            }
+
+            Console.WriteLine();
+        }
+    }
+}        get { return _godinaProizvodnje; }
         private set { _godinaProizvodnje = value; }
     }
     public List<string> Sastojci
